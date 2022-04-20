@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example1
+  namespace: afsaf
+spec:
+  # expose this application externally
+  type: LoadBalancer
+  # inside cluster access only
+  #type: ClusterIP
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    # this selector points to pods we want to target
+    app: deploy-example
