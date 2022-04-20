@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-example
+  namespace: asdadsadad
+  labels:
+    app: pod-example
+    purpose: training
+spec:
+  containers:
+  - name: web
+    # apache docker image
+    # https://hub.docker.com/_/httpd
+    image: httpd:latest
