@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-example
+  namespace: siim-tetssst
+spec:
+  # run 3 pods with same spec
+  replicas: 3
+  selector:
+    matchLabels:
+      # this select is used to join pods and deploy
+      app: deploy-example
+  template:
+    metadata:
+      labels:
+        # those labels are used for all pods created by this deploy
+        app: deploy-example
+        purpose: training
+    spec:
+      containers:
+      #
+      # !!! spec of the pod starts here !!!
+      #
+      - name: deploy-example
+        # docker image that is used in our pod
+        image: httpd
+        #
+        # extra custom config for pod
+        #
+        ports:
+        # this is the port that docker container exposes
+        - containerPort: 80
+        #
+        # https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        #
+        resources:
+          #
+          # requests is used to define the amount of resources that Kubernetes reserves for the pod
+          #
+          # NB: if Kubernetes (nodes) has no resources left, then they will not accept any new pods
+          #
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          #
+          # limits will define what is the max amount of resources that cluster can give to the pod
+          #
+          limits:
+            cpu: 300m
+            memory: 500Mi
+        # readinessProbe is used to check whether an application is ready to serve traffic
+        readinessProbe:
+          httpGet:
+            path: /index.html
+            port: 80
+          initialDelaySeconds: 5
+        # env values for pod
+        env:
+        - name: VAR_ONE
+          value: "test env value for container"
