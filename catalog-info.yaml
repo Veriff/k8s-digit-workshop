@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1beta1
+kind: Component
+metadata:
+  name: k8s-digit-workshop
+  description: ''
+  annotations:
+    veriff.com/criticality: none
+    github.com/project-slug: Veriff/k8s-digit-workshop
+spec:
+  type: undefined
+  owner: undefined
+  lifecycle: undefined
